@@ -7,7 +7,7 @@ import {
 
 export default defineConfig({
   testDir: "./tests",
-  fullyParallel: true,
+  fullyParallel: false,
   retries: 0,
   workers: 1,
   reporter: [
@@ -25,4 +25,15 @@ export default defineConfig({
     trace: "retain-on-failure",
   },
   outputDir: getArtifactsDir(),
+  projects: [
+    {
+      name: "Login",
+      testMatch: /.*login\.test\.ts$/, 
+    },
+    {
+      name: "All features",
+      testIgnore: /.*login\.test\.ts$/,
+      testMatch: /.*\.test\.ts$/, 
+    },
+  ],
 });
