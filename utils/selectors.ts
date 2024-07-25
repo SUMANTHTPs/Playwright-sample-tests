@@ -6,4 +6,5 @@ export const selectors = {
   itemSearchBox: "#twotabsearchtextbox",
   searchIcon: '[id="nav-search-submit-button"]',
   itemCategories: "#departments a span",
+  filtersPane: '[id="s-refinements"]',
 };

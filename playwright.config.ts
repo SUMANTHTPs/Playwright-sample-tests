@@ -24,16 +24,19 @@ export default defineConfig({
     video: "retain-on-failure",
     trace: "retain-on-failure",
   },
+  reportSlowTests: null,
+  timeout: 6000000,
   outputDir: getArtifactsDir(),
   projects: [
     {
       name: "Login",
-      testMatch: /.*login\.test\.ts$/, 
+      testMatch: /.*login\.test\.ts$/,
     },
     {
       name: "All features",
       testIgnore: /.*login\.test\.ts$/,
-      testMatch: /.*\.test\.ts$/, 
+      testMatch: /.*\.test\.ts$/,
+      fullyParallel: true,
     },
   ],
 });

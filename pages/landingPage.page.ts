@@ -50,7 +50,7 @@ export class LandingPage {
     await this.page.click(selectors.searchIcon);
     await this.page.waitForLoadState();
 
-    await this.page.waitForSelector(".s-main-slot");
+    await this.page.waitForSelector(selectors.filtersPane);
     const results = await this.page.$$eval(
       selectors.itemCategories,
       (categories) => categories.map((category: any) => category.textContent)

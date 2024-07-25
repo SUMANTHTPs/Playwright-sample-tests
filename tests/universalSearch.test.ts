@@ -1,11 +1,20 @@
 import test from "@playwright/test";
 import { LandingPage } from "../pages/landingPage.page";
-import { getStorageStateDir } from "../utils/testUtils";
-import * as fs from "fs";
+import {
+  checkLoginWithStateFile,
+  getStorageStateDir,
+} from "../utils/testUtils";
 
-test.describe.parallel("Scenario based tests", () => {
+test.describe("Scenario based tests", () => {
   let landingPage: LandingPage;
-  const storageStateExists = fs.existsSync(getStorageStateDir());
+
+  test.beforeAll(async () => {
+    const loginStateExists = checkLoginWithStateFile();
+    if (!loginStateExists) {
+      console.log("Skipping tests because login state is not available");
+      test.skip();
+    }
+  });
 
   test.use({ storageState: getStorageStateDir() });
 
