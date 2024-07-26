@@ -1,3 +1,4 @@
+import { test } from "@playwright/test";
 import * as fs from "fs";
 import { readFileSync } from "fs";
 import path from "path";
@@ -20,10 +21,28 @@ export const getStorageStateDir = () => {
   return getAuthArtifactsDir() + "/storageState.json";
 };
 
-export const checkLoginWithStateFile = () => {
-  const storageStateExists = fs.existsSync(getStorageStateDir());
-  if (!storageStateExists) {
-    console.log("Login state file is required to run tests");
-  }
-  return storageStateExists;
+export const checkLoginWithStateFile = (): boolean => {
+  const storageStatePath = getStorageStateDir();
+  return fs.existsSync(storageStatePath);
+};
+
+export const testDescribe = (title: string, callBack: () => void): void => {
+  console.log(`[Debug] Running test: ${title}`);
+  test.describe(title, () => {
+    let loginStateExists: boolean;
+
+    test.beforeAll(() => {
+      loginStateExists = checkLoginWithStateFile();
+      if (!loginStateExists) {
+        console.log("Login state file is required to run tests");
+        test.skip();
+      }
+    });
+
+    if (checkLoginWithStateFile()) {
+      test.use({ storageState: getStorageStateDir() });
+    }
+
+    callBack();
+  });
 };

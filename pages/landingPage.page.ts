@@ -38,7 +38,7 @@ export class LandingPage {
     expect(await this.page.title()).toContain("Amazon");
 
     // https://github.com/microsoft/playwright/issues/21096
-    await this.page.waitForTimeout(10000);
+    await this.page.waitForTimeout(30000);
     await this.page.context().storageState({
       path: getStorageStateDir(),
     });
