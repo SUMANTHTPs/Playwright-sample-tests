@@ -1,7 +1,7 @@
 import { expect, Page } from "@playwright/test";
-import { selectors } from "../utils/selectors";
-import { getConfig, getStorageStateDir } from "../utils/testUtils";
 import { Constants } from "../utils/constants";
+import { getConfig, getStorageStateDir } from "../utils/testUtils";
+import { selectors } from "../utils/selectors";
 
 export class LandingPage {
   readonly page: Page;

@@ -18,7 +18,7 @@ export const getConfig = () => {
  * @returns path
  */
 export const getArtifactsDir = () => {
-  return path.join(__dirname, "/../", "/artifacts");
+  return path.join(__dirname, "/../../", "/artifacts");
 };
 
 /**
@@ -26,7 +26,7 @@ export const getArtifactsDir = () => {
  * @returns path
  */
 export const getAuthArtifactsDir = () => {
-  return path.join(__dirname, "/../", "/authArtifacts");
+  return path.join(__dirname, "/../../", "/authArtifacts");
 };
 
 /**

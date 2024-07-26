@@ -1,8 +1,8 @@
 import { defineConfig } from "@playwright/test";
-import { getArtifactsDir, getConfig } from "./utils/testUtils";
+import { getArtifactsDir, getConfig } from "./src/utils/testUtils";
 
 export default defineConfig({
-  testDir: "./tests",
+  testDir: "./src/tests",
   fullyParallel: false,
   retries: 0,
   workers: 1,
