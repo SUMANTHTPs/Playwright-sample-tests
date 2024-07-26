@@ -1,9 +1,5 @@
 import { defineConfig } from "@playwright/test";
-import {
-  getArtifactsDir,
-  getConfig,
-  getStorageStateDir,
-} from "./utils/testUtils";
+import { getArtifactsDir, getConfig } from "./utils/testUtils";
 
 export default defineConfig({
   testDir: "./tests",
@@ -25,7 +21,7 @@ export default defineConfig({
     trace: "retain-on-failure",
   },
   reportSlowTests: null,
-  timeout: 6000000,
+  timeout: 60000,
   outputDir: getArtifactsDir(),
   projects: [
     {

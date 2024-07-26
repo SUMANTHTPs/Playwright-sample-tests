@@ -1,11 +1,7 @@
 import { expect, Page } from "@playwright/test";
 import { selectors } from "../utils/selectors";
-import {
-  getArtifactsDir,
-  getAuthArtifactsDir,
-  getConfig,
-  getStorageStateDir,
-} from "../utils/testUtils";
+import { getConfig, getStorageStateDir } from "../utils/testUtils";
+import { Constants } from "../utils/constants";
 
 export class LandingPage {
   readonly page: Page;
@@ -20,7 +16,7 @@ export class LandingPage {
   public async navigateToApp() {
     await this.page.goto("/");
     await this.page.waitForLoadState();
-    expect(await this.page.title()).toContain("Amazon");
+    expect(await this.page.title()).toContain(Constants.AMAZON);
     return true;
   }
 
@@ -35,33 +31,36 @@ export class LandingPage {
     await this.page.locator(selectors.password).fill(getConfig().password);
     await this.page.locator(selectors.signInSubmitButton).last().click();
     await this.page.waitForLoadState();
-    expect(await this.page.title()).toContain("Amazon");
+    expect(await this.page.title()).toContain(Constants.AMAZON);
 
     // https://github.com/microsoft/playwright/issues/21096
-    await this.page.waitForTimeout(30000);
+    await this.page.waitForTimeout(10000);
     await this.page.context().storageState({
       path: getStorageStateDir(),
     });
   }
 
-  public async searchForItem() {
+  /**
+   * Search for item
+   */
+  public async searchForItem(item: string = Constants.SHOE) {
     await this.page.waitForLoadState();
-    await this.page.fill(selectors.itemSearchBox, "shoes");
+    await this.page.fill(selectors.itemSearchBox, item);
     await this.page.click(selectors.searchIcon);
     await this.page.waitForLoadState();
-
     await this.page.waitForSelector(selectors.filtersPane);
     const results = await this.page.$$eval(
       selectors.itemCategories,
       (categories) => categories.map((category: any) => category.textContent)
     );
-
+    const itemsOnScreen = await this.page.getByText(item).count();
     expect(results.length).toBeGreaterThan(0);
+    expect(itemsOnScreen).toBeGreaterThan(10);
     results.forEach((result: string) => {
       try {
-        expect(result.toLowerCase()).toContain("shoe");
+        expect(result.toLowerCase()).toContain(item);
       } catch (e) {
-        expect(result.toLowerCase()).toContain("sneaker");
+        expect(result.toLowerCase()).toContain(Constants.SNEAKER);
       }
     });
   }
