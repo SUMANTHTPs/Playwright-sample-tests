@@ -5,6 +5,7 @@ export default defineConfig({
   testDir: "./src/tests",
   fullyParallel: false,
   retries: 0,
+  // Run run in parallel mode, Increase workers count
   workers: 1,
   reporter: [
     ["list"],
